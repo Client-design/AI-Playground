@@ -1,10 +1,10 @@
 /* --- Variables and Reset --- */
 :root {
     --primary-color: #007bff; /* InternAdda Blue */
-    --secondary-color: #28a745; /* Success Green */
     --background-light: #f4f7f9;
     --card-background: #ffffff;
     --text-dark: #333333;
+    --nav-text-color: #555555; /* Darker than previous to match the image text */
 }
 
 * {
@@ -27,11 +27,10 @@ body {
     padding: 10px 0;
 }
 
-/* --- Header Styling --- */
+/* --- Header Styling (To match the provided image) --- */
 .main-header {
     background: var(--card-background);
-    border-bottom: 2px solid var(--primary-color);
-    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .main-header .container {
@@ -39,35 +38,125 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 0;
+    min-height: 50px;
 }
 
-.logo {
-    font-size: 1.6em;
-    font-weight: 700;
-    color: var(--primary-color);
-    text-transform: uppercase;
+/* Logo Area Styling */
+.logo-area {
+    display: flex;
+    align-items: center;
+    text-decoration: none; /* Remove underline from anchor tag */
 }
 
-.main-nav ul {
+.logo-img {
+    height: 35px; /* Adjusted size to look clean */
+    width: auto;
+    margin-right: 8px;
+}
+
+.logo-text {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #004d99; /* Darker blue color from the image */
+    text-transform: capitalize;
+    /* Hide the text on the AI Playground to prioritize the image logo, but keep it for accessibility/SEO */
+    display: none; 
+}
+
+/* Navigation Styling */
+.main-nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
     list-style: none;
     display: flex;
+    margin: 0;
+    padding: 0;
 }
 
-.main-nav ul li a {
-    color: var(--text-dark);
+.nav-links li a {
+    color: var(--nav-text-color); 
     text-decoration: none;
     padding: 8px 15px;
     display: block;
-    transition: color 0.3s, background 0.3s;
-    font-weight: 600;
+    transition: color 0.3s;
+    font-size: 1.05em;
+    font-weight: 400; /* Lighter font-weight like in the image */
 }
 
-.main-nav ul li a:hover, .main-nav ul li a.active {
-    color: var(--primary-color);
-    border-bottom: 3px solid var(--primary-color);
+.nav-links li a:hover, .nav-links li a.active {
+    color: var(--text-dark); /* Darken on hover for feedback */
+    font-weight: 500;
 }
 
-/* --- Main Content and Hero --- */
+.menu-toggle {
+    display: none; /* Hide on desktop */
+}
+
+
+/* --- Mobile Responsiveness (Header) --- */
+@media (max-width: 768px) {
+    .main-header .container {
+        padding: 10px 0;
+    }
+    
+    .logo-img {
+        height: 30px;
+    }
+
+    /* Show the hamburger menu icon */
+    .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5em;
+        cursor: pointer;
+        color: var(--text-dark);
+        padding: 5px 10px;
+    }
+
+    /* Hide the text logo on mobile when the image logo is prominent */
+    .logo-text {
+        display: none; 
+    }
+
+    /* Stack navigation links vertically on mobile and hide by default */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px; /* Below the header */
+        right: 0;
+        width: 100%;
+        background: var(--card-background);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 10;
+        text-align: left;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li a {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Move menu toggle to the right */
+    .main-nav {
+        order: 2;
+    }
+    .logo-area {
+        order: 1;
+    }
+}
+
+
+/* --- Main Content, Hero, and Search Bar Styling (Retained and refined) --- */
+
 .ai-playground-content {
     padding: 20px 0;
 }
@@ -76,7 +165,7 @@ body {
     text-align: center;
     padding: 50px 20px;
     margin-bottom: 30px;
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb); /* Light Blue Gradient */
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb); /* Light Blue Gradient - Trustful AI Vibe */
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
@@ -88,13 +177,7 @@ body {
     font-weight: 700;
 }
 
-.hero-section p {
-    margin-bottom: 25px;
-    color: #555;
-    font-size: 1.1em;
-}
-
-/* Search Bar Styling */
+/* Search Bar Styling (Professional Look) */
 .search-bar-container {
     display: flex;
     justify-content: center;
@@ -102,15 +185,16 @@ body {
     max-width: 600px;
     margin: 0 auto;
     background: var(--card-background);
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 25px; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
 #prompt-search {
     flex-grow: 1;
     padding: 12px 20px;
     border: none;
-    border-radius: 8px 0 0 8px;
+    border-radius: 25px 0 0 25px;
     font-size: 1em;
     outline: none;
 }
@@ -119,11 +203,11 @@ body {
     background: var(--primary-color);
     color: white;
     border: none;
-    padding: 12px 20px;
+    padding: 12px 25px;
     font-size: 1em;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 25px 25px 0;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.1s;
     font-weight: 600;
 }
 
@@ -192,7 +276,9 @@ body {
     color: #999;
 }
 
-/* --- Footer Styling --- */
+
+/* --- Footer and General Mobile Responsiveness --- */
+
 .main-footer {
     background: #333;
     color: white;
@@ -218,24 +304,14 @@ body {
     font-size: 0.8em;
 }
 
-/* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
-    .main-header .container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .main-nav ul {
-        margin-top: 10px;
-        justify-content: center;
-    }
-
-    .hero-section h2 {
-        font-size: 1.8em;
+    .gallery-grid {
+        grid-template-columns: 1fr; 
     }
     
     .search-bar-container {
         flex-direction: column;
+        border-radius: 8px;
     }
 
     #prompt-search {
@@ -246,9 +322,5 @@ body {
     #search-button {
         border-radius: 8px;
         width: 100%;
-    }
-    
-    .gallery-grid {
-        grid-template-columns: 1fr; /* Stack posts vertically */
     }
 }
