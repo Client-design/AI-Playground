@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Load More Functionality ---
     const POSTS_PER_LOAD = 4;
     const INITIAL_POSTS_DESKTOP = 4; 
-    const INITIAL_POSTS_MOBILE = 2; // User requested 2 on mobile
+    const INITIAL_POSTS_MOBILE = 2; // User requested 2 on mobile/tablet
 
     let currentlyVisiblePosts = 0;
 
@@ -120,10 +120,19 @@ document.addEventListener('DOMContentLoaded', () => {
         initializePosts();
     }
     
-    // Load more handler
+    // Load more handler with simulated loading animation
     if (loadMoreButton) {
         loadMoreButton.addEventListener('click', () => {
-            showPosts(currentlyVisiblePosts, POSTS_PER_LOAD);
+            // 1. Start loading animation (add 'loading' class)
+            loadMoreButton.classList.add('loading');
+            
+            // 2. Simulate network delay (0.5 seconds) for animation effect
+            setTimeout(() => {
+                showPosts(currentlyVisiblePosts, POSTS_PER_LOAD);
+                
+                // 3. Stop loading animation (remove 'loading' class)
+                loadMoreButton.classList.remove('loading');
+            }, 500); 
         });
     }
 
