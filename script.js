@@ -122,13 +122,22 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', initializePosts);
 
 
-    // --- Show Full Prompt Modal Logic ---
+    // --- Show Full Prompt Modal Logic (UPDATED) ---
     const modal = document.getElementById('promptModal');
     const modalCloseBtn = document.querySelector('.close-btn');
+    const modalImage = document.getElementById('modal-full-image'); // New element ID
+    const modalTitle = document.getElementById('modal-post-title'); // New element ID
     const fullPromptTextContainer = document.getElementById('full-prompt-text');
     
-    // Function to open the modal
-    const openModal = (promptHTML) => {
+    /**
+     * Opens the modal with the post's image, title, and full prompt.
+     * @param {string} imageSrc - The source URL of the AI image.
+     * @param {string} postTitle - The title of the AI post.
+     * @param {string} promptHTML - The full HTML content of the prompt text.
+     */
+    const openModal = (imageSrc, postTitle, promptHTML) => {
+        modalImage.src = imageSrc;         // Set the image source
+        modalTitle.textContent = postTitle; // Set the title
         fullPromptTextContainer.innerHTML = promptHTML;
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden'; // Prevent background scrolling
@@ -140,14 +149,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = ''; // Restore scrolling
     };
 
-    // 1. Add click listeners to all "Show Full Prompt" buttons
-    document.querySelectorAll('.show-full-prompt-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-            // Find the sibling .prompt-text element, which holds the HTML content
-            const promptElement = e.target.closest('.prompt-area').querySelector('.prompt-text');
-            // Get the entire HTML content of the prompt text
+    // 1. Add click listeners to all ".ai-post" cards
+    document.querySelectorAll('.ai-post').forEach(post => {
+        post.addEventListener('click', (e) => {
+            // Find the image, title, and prompt text relative to the clicked post
+            const imageSrc = post.querySelector('img').src;
+            const postTitle = post.querySelector('h4').textContent;
+            const promptElement = post.querySelector('.prompt-text');
             const fullPromptHTML = promptElement.innerHTML;
-            openModal(fullPromptHTML);
+
+            openModal(imageSrc, postTitle, fullPromptHTML);
         });
     });
 
