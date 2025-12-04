@@ -1,0 +1,195 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif; /* Use your main site's font */
+    line-height: 1.6;
+    background-color: #f4f4f9; /* Light background for a modern look */
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* --- Header Styling --- */
+.main-header {
+    background: #007bff; /* Primary Brand Color (adjust to InternAta's color) */
+    color: white;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.main-nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background 0.3s;
+}
+
+.main-nav ul li a:hover, .main-nav ul li a.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* --- Main Content Styling --- */
+.ai-playground-content {
+    padding: 40px 0;
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    padding: 60px 20px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #e0f7fa, #b3e5fc); /* Light, engaging gradient */
+    border-radius: 10px;
+}
+
+.hero-section h2 {
+    color: #007bff;
+    margin-bottom: 15px;
+    font-size: 2.5em;
+}
+
+.cta-button {
+    background: #28a745; /* Green CTA Button */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.cta-button:hover {
+    background: #218838;
+}
+
+/* Gallery Section */
+.ai-gallery h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.ai-post {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.ai-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.ai-post img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.ai-post h4 {
+    padding: 15px 15px 5px;
+    color: #007bff;
+}
+
+.prompt-text {
+    padding: 0 15px 15px;
+    font-style: italic;
+    font-size: 0.9em;
+    color: #666;
+    border-bottom: 1px dashed #eee;
+    margin-bottom: 10px;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px 15px;
+    font-size: 0.85em;
+    color: #999;
+}
+
+.likes-simulation {
+    font-weight: bold;
+    color: #dc3545; /* Red for the heart */
+}
+
+/* Added styling for the simulated like button (from JS) */
+.simulated-like-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+/* --- Footer Styling --- */
+.main-footer {
+    background: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer-links a {
+    color: #b3e0ff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 0.9em;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #007bff;
+}
+
+.main-footer p {
+    margin-top: 15px;
+    font-size: 0.8em;
+}
