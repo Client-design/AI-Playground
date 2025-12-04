@@ -192,7 +192,7 @@ body {
 
 
 /* ----------------------------------
- * 4. Gallery Section (Updated Grid)
+ * 4. Gallery Section (Updated Grid & View More Button)
  * ---------------------------------- */
 
 .ai-gallery h3 {
@@ -225,14 +225,14 @@ body {
 
 .ai-post img {
     width: 100%;
-    height: 280px;
+    height: 250px; /* Reduced height slightly for mobile-friendliness */
     object-fit: cover;
     display: block;
     border-bottom: 1px solid #eee;
 }
 
 .post-details {
-    padding: 15px;
+    padding: 12px 15px; /* Reduced padding for a slightly smaller UI */
 }
 
 .ai-post h4 {
@@ -271,14 +271,53 @@ body {
     font-size: 1.05em;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s, transform 0.1s;
+    /* Added transition for opacity and combined button properties for better control */
+    transition: background 0.3s, transform 0.1s, opacity 0.3s; 
     font-weight: 600;
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+    /* Flex properties to center content (text/spinner) and center the button itself */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto; 
 }
 
-#load-more-posts:hover {
+#load-more-posts:hover:not(.loading) {
     background: #0056b3;
     transform: translateY(-2px);
+}
+
+/* Loading State for professional animation */
+#load-more-posts.loading {
+    pointer-events: none; /* Disable clicks while loading */
+    opacity: 0.8;
+    background: #0056b3;
+    min-width: 200px; /* Prevents button size jumping when text is hidden */
+}
+
+/* Spinner Animation CSS */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+    display: none;
+}
+
+#load-more-posts.loading .spinner {
+    display: block;
+}
+
+#load-more-posts.loading .button-text {
+    visibility: hidden; /* Hide text when loading */
 }
 
 /* ----------------------------------
@@ -428,6 +467,24 @@ body {
     .gallery-grid {
         grid-template-columns: repeat(2, 1fr); 
         gap: 15px; 
+    }
+    
+    /* UI Ko Small Karo for mobile */
+    .ai-post img {
+        height: 180px; /* Tighter image height */
+    }
+
+    .post-details {
+        padding: 10px; /* Reduced padding */
+    }
+
+    .ai-post h4 {
+        font-size: 1.1em;
+        margin-bottom: 5px;
+    }
+
+    .prompt-text {
+        font-size: 0.8em;
     }
 
     /* Footer stacking on mobile */
