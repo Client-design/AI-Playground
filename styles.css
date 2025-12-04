@@ -216,6 +216,7 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer; /* NEW: Indicate clickability for the whole card */
 }
 
 .ai-post:hover {
@@ -263,36 +264,14 @@ body {
     margin-bottom: 0;
 }
 
-/* Fade out effect over truncated text */
+/* Fade out effect over truncated text - REMOVED FOR CLEANER LOOK */
 .prompt-area::after {
-    content: '';
-    position: absolute;
-    bottom: 30px; /* Position above the button */
-    left: 0;
-    right: 0;
-    height: 1.5em; /* Height of the fade effect */
-    background: linear-gradient(to bottom, transparent, var(--card-background));
-    pointer-events: none;
-    z-index: 2;
+    display: none;
 }
 
+/* The button and its styles are removed from HTML and CSS */
 .show-full-prompt-btn {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    font-size: 0.85em;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 5px 0 0 0;
-    display: block;
-    width: 100%;
-    text-align: left;
-    transition: color 0.2s;
-}
-
-.show-full-prompt-btn:hover {
-    color: #0056b3;
-    text-decoration: underline;
+    display: none;
 }
 
 .post-meta {
@@ -424,7 +403,7 @@ body {
 }
 
 /* ----------------------------------
- * 7. Modal (Popup) Styling 
+ * 7. Modal (Popup) Styling - UPDATED FOR SPLIT VIEW
  * ---------------------------------- */
 
 .modal {
@@ -436,7 +415,7 @@ body {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.7); /* Black w/ opacity backdrop */
+    background-color: rgba(0,0,0,0.8); /* Darker backdrop for focus */
     padding-top: 50px; 
 }
 
@@ -446,34 +425,51 @@ body {
     padding: 30px;
     border-radius: 12px;
     width: 90%; 
-    max-width: 700px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    max-width: 1000px; /* Increased max-width for the split view */
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
     position: relative;
+    max-height: 90vh; /* Prevent modal from being too tall */
+    overflow-y: auto; /* Enable scrolling inside if content is too long */
 }
 
-.modal-content h4 {
+.modal-body-content {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.modal-image-container {
+    flex: 1; /* Takes up 1 part of the space (smaller side) */
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 550px; /* Limit image height for large screens */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.modal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.modal-details {
+    flex: 2; /* Takes up 2 parts of the space (larger side for text) */
+}
+
+/* Post Title inside Modal */
+#modal-post-title {
     color: var(--primary-color);
     margin-bottom: 15px;
-    font-size: 1.5em;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
+    font-size: 1.8em;
+    font-weight: 700;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--ai-blue); /* Professional separator */
 }
 
 .prompt-text-modal {
-    font-family: var(--tech-font);
-    font-size: 1em;
-    color: var(--text-dark);
-    line-height: 1.6; 
-    white-space: pre-wrap; 
+    /* Removed redundant H4 style, now using #modal-post-title */
     padding-top: 10px; 
-}
-
-/* FIX: Ensure the prompt text paragraph inside the modal doesn't have extra margins */
-.prompt-text-modal .prompt-text {
-    max-height: none; 
-    overflow: visible;
-    margin: 0; 
-    padding: 0;
 }
 
 /* FIX: Target the code style span inside the modal to remove padding/background and fix alignment */
@@ -584,39 +580,85 @@ body {
         width: 100%;
     }
     
-    /* User requested 2 columns on mobile/tablet */
+    /* --- NEW/ADJUSTED MOBILE STYLES FOR COMPACTNESS AND UI --- */
+
+    /* Hero Section: Reduced padding for more vertical space */
+    .hero-section {
+        padding: 30px 15px; 
+        margin-bottom: 20px;
+    }
+
+    .hero-section h2 {
+        font-size: 1.8em;
+    }
+
+    /* Gallery Grid: Maintained 2-column layout but reduced gap */
     .gallery-grid {
         grid-template-columns: repeat(2, 1fr); 
-        gap: 15px; 
+        gap: 12px; /* Reduced gap for compactness */
     }
     
-    /* UI Ko Small Karo for mobile */
+    /* AI Post: Tighter card design */
+    .ai-post {
+        border-radius: 8px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.08); /* Lighter shadow */
+    }
+
     .ai-post img {
-        height: 180px; /* Tighter image height */
+        height: 150px; /* Reduced height for more screen space */
+        border-radius: 8px 8px 0 0; /* Apply top border radius to image */
+        border-bottom: none; /* Remove redundant border */
     }
 
     .post-details {
-        padding: 10px; /* Reduced padding */
+        padding: 8px; /* Further reduced padding */
     }
 
     .ai-post h4 {
-        font-size: 1.1em;
+        font-size: 1em; /* Reduced heading size */
+        margin-bottom: 5px;
+    }
+    
+    /* Prompt Area: More compact wrapper */
+    .prompt-area {
+        padding: 5px 0;
         margin-bottom: 5px;
     }
 
     .prompt-text {
-        font-size: 0.8em;
-        max-height: 3.8em; /* Adjusted for smaller mobile text, 3 lines */
+        font-size: 0.75em; /* Smaller font for compactness */
+        max-height: 3.5em; /* Adjusted max-height for ~3 lines */
     }
 
-    .prompt-area::after {
-        bottom: 30px; 
+    .post-meta {
+        font-size: 0.75em; /* Smaller meta text */
     }
 
+    /* Load More Button */
+    #load-more-posts {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    /* MODAL MOBILE STYLES: Stack content vertically */
     .modal-content {
-        margin: 15% auto; /* Move higher up on mobile screens */
+        margin: 10% auto;
+        padding: 20px;
+    }
+    
+    .modal-body-content {
+        flex-direction: column;
+        gap: 15px;
     }
 
+    .modal-image-container {
+        max-height: 250px;
+    }
+
+    #modal-post-title {
+        font-size: 1.5em;
+    }
+    
     /* Footer stacking on mobile */
     .footer-sections {
         flex-direction: column;
@@ -637,6 +679,7 @@ body {
     .gallery-grid {
         grid-template-columns: 1fr;
     }
+    /* Increase image height for single column to look better */
     .ai-post img {
         height: 200px;
     }
