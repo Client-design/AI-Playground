@@ -2,7 +2,6 @@
 :root {
     --primary-color: #007bff; /* InternAdda Blue */
     --ai-blue: #00c4ff; /* Lighter/Electric Blue for AI elements */
-    --ai-bg-dark: #1f2937; /* Dark background for AI feel (used selectively) */
     --background-light: #f4f7f9;
     --card-background: #ffffff;
     --text-dark: #333333;
@@ -205,8 +204,14 @@ body {
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    /* Default desktop: 3-4 posts wide */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
     gap: 30px;
+}
+
+/* Class to hide posts initially for 'View More' */
+.ai-post.hidden-post {
+    display: none; 
 }
 
 .ai-post {
@@ -256,6 +261,30 @@ body {
     color: #999;
 }
 
+/* View More Button Styling */
+.view-more-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+#view-more-button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#view-more-button:hover {
+    background: #0056b3;
+}
+
+
 /* ----------------------------------
  * 5. Footer Styling 
  * ---------------------------------- */
@@ -268,10 +297,33 @@ body {
     margin-top: 50px;
 }
 
+.main-footer .container {
+    padding-top: 0; 
+    padding-bottom: 0;
+}
+
+.footer-sections {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; 
+    padding-bottom: 20px;
+    border-bottom: 1px solid #444; 
+    margin-bottom: 20px;
+}
+
+/* Footer Links Styling */
+.footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center; 
+    margin-top: 10px;
+}
+
 .footer-links a {
     color: #a0c4ff;
     text-decoration: none;
-    margin: 0 15px;
     font-size: 0.9em;
     transition: color 0.3s;
 }
@@ -280,9 +332,40 @@ body {
     color: var(--primary-color);
 }
 
-.main-footer p {
-    margin-top: 20px;
+/* Social Links Styling */
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    order: 1; /* Move social links to the start on mobile */
+    width: auto;
+}
+
+.social-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #444;
+    color: white;
+    font-size: 1.1em;
+    transition: background 0.3s, color 0.3s;
+}
+
+.social-link:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.copyright-text {
+    text-align: center;
+}
+
+.copyright-text p {
     font-size: 0.8em;
+    margin: 0;
 }
 
 /* ----------------------------------
@@ -341,6 +424,12 @@ body {
         font-weight: 600;
     }
     
+    /* Mobile Gallery: Show 2 posts per frame */
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(45%, 1fr)); 
+        gap: 15px; /* Reduced gap for smaller screens */
+    }
+    
     /* Search bar stacking */
     .search-bar-container {
         flex-direction: column;
@@ -357,7 +446,25 @@ body {
         width: 100%;
     }
     
-    .gallery-grid {
-        grid-template-columns: 1fr; 
+    /* Footer Mobile Adjustments */
+    .footer-sections {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .social-links {
+        margin-bottom: 20px;
+        order: 1; 
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .footer-links {
+        order: 2;
+        margin-bottom: 0;
+    }
+
+    .footer-links a {
+        padding: 5px 10px;
     }
 }
