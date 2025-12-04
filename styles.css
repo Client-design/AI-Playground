@@ -2,7 +2,7 @@
 :root {
     --primary-color: #007bff; /* InternAdda Blue */
     --ai-blue: #00c4ff; /* Lighter/Electric Blue for AI elements */
-    --ai-bg-dark: #1f2937; /* Dark background for AI feel */
+    --ai-bg-dark: #1f2937; /* Dark background for AI feel (used selectively) */
     --background-light: #f4f7f9;
     --card-background: #ffffff;
     --text-dark: #333333;
@@ -30,7 +30,9 @@ body {
     padding: 10px 0;
 }
 
-/* --- Header Styling (Finalized) --- */
+/* ----------------------------------
+ * 1. Header Styling 
+ * ---------------------------------- */
 .main-header {
     background: var(--card-background);
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -58,7 +60,7 @@ body {
 .logo-text {
     font-size: 1.5em;
     font-weight: 600;
-    color: #004d99; /* Darker blue color from the image */
+    color: #004d99; 
     text-transform: capitalize;
 }
 
@@ -89,8 +91,6 @@ body {
     font-weight: 500;
 }
 
-/* --- Mobile Hamburger Menu Styling --- */
-
 .menu-toggle {
     display: none; /* Hidden on desktop */
     background: none;
@@ -110,16 +110,33 @@ body {
     transition: all 0.3s ease-in-out;
 }
 
-/* --- AI Vibe Upgrade --- */
+/* ----------------------------------
+ * 2. AI Vibe & Hero Section 
+ * ---------------------------------- */
+
+.ai-playground-content {
+    padding: 20px 0;
+}
 
 .hero-section {
     /* Slightly more electric gradient for AI feel */
     background: linear-gradient(135deg, #e0f7fa, #b3e5fc); 
     border: 1px solid var(--ai-blue);
     padding: 50px 20px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    text-align: center;
 }
 
-/* Tech/Code style for prompt sections */
+.hero-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 2.2em;
+    font-weight: 700;
+}
+
+/* Tech/Code style for visual elements */
 .code-style {
     font-family: var(--tech-font);
     color: var(--ai-blue);
@@ -130,33 +147,147 @@ body {
     border-radius: 3px;
 }
 
-.ai-gallery h3 {
-    text-align: center;
-    font-family: var(--tech-font);
-    color: var(--text-dark);
+/* ----------------------------------
+ * 3. Search Bar Styling 
+ * ---------------------------------- */
+
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--card-background);
+    border-radius: 25px; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
-.prompt-text {
-    font-family: var(--tech-font);
-    font-size: 0.85em;
-    color: #666;
-    padding: 10px 0;
-    border-top: 1px dashed #ddd;
-    border-bottom: 1px dashed #ddd;
+#prompt-search {
+    flex-grow: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px 0 0 25px;
+    font-size: 1em;
+    outline: none;
 }
 
-/* Search button slight aesthetic change */
 #search-button {
     background: var(--ai-blue); 
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1em;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+    font-weight: 600;
     box-shadow: 0 0 5px var(--ai-blue);
 }
+
 #search-button:hover {
     background: #0099cc;
     box-shadow: 0 0 8px #0099cc;
 }
 
 
-/* --- Mobile Responsiveness --- */
+/* ----------------------------------
+ * 4. Gallery Section 
+ * ---------------------------------- */
+
+.ai-gallery h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 1.8em;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.ai-post {
+    background: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.ai-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.ai-post img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+
+.post-details {
+    padding: 15px;
+}
+
+.ai-post h4 {
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-size: 1.2em;
+}
+
+.prompt-text {
+    font-family: var(--tech-font);
+    font-style: italic;
+    font-size: 0.85em;
+    color: #666;
+    padding: 10px 0;
+    border-top: 1px dashed #ddd;
+    border-bottom: 1px dashed #ddd;
+    margin-bottom: 10px;
+}
+
+.post-meta {
+    font-size: 0.85em;
+    color: #999;
+}
+
+/* ----------------------------------
+ * 5. Footer Styling 
+ * ---------------------------------- */
+
+.main-footer {
+    background: #333;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.footer-links a {
+    color: #a0c4ff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 0.9em;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.main-footer p {
+    margin-top: 20px;
+    font-size: 0.8em;
+}
+
+/* ----------------------------------
+ * 6. Mobile Responsiveness 
+ * ---------------------------------- */
 @media (max-width: 768px) {
     .main-header .container {
         padding: 10px 0;
