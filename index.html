@@ -4,20 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InternAdda AI Playground</title>
-    <link rel="stylesheet" href="styles.css"> <link rel="icon" href="/favicon.ico"> 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-</head>
+    <link rel="stylesheet" href="styles.css"> 
+    <link rel="icon" href="/favicon.ico"> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    </head>
 <body>
 
     <header class="main-header">
         <div class="container">
             <a href="https://internadda.com/" class="logo-area">
                 <img src="logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda</span>
+                <span class="logo-text">InternAdda Playground</span>
             </a>
             
             <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Toggle navigation menu">&#9776;</button>
+                <button class="menu-toggle" aria-label="Toggle navigation menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
                 <ul class="nav-links">
                     <li><a href="https://internadda.com/">Home</a></li>
                     <li><a href="https://courses.internadda.com/">Courses</a></li>
@@ -41,14 +46,14 @@
             </section>
 
             <section class="ai-gallery">
-                <h3>Featured AI Creations</h3>
+                <h3>Featured AI Creations <span class="code-style">{_AI_OUTPUT_}</span></h3>
                 <div class="gallery-grid" id="gallery-grid">
                     
                     <div class="ai-post" data-keywords="forest neon mystical digital art">
                         <img src="placeholder-ai-image1.jpg" alt="A Forest of Neon Dreams">
                         <div class="post-details">
                             <h4>A Forest of Neon Dreams</h4>
-                            <p class="prompt-text"><strong>Prompt:</strong> "A highly detailed <strong>matte painting</strong> of a <strong>mystical forest</strong> under a bioluminescent sky, deep saturation, trending on ArtStation."</p>
+                            <p class="prompt-text"><span class="code-style">> prompt_query: </span>"A highly detailed <strong>matte painting</strong> of a <strong>mystical forest</strong> under a bioluminescent sky, deep saturation, trending on ArtStation."</p>
                             <div class="post-meta">
                                 <span>Posted by: <strong>Co-Founder</strong> (InternAdda)</span>
                             </div>
@@ -59,7 +64,7 @@
                         <img src="placeholder-ai-image2.jpg" alt="Cyberpunk Cityscape">
                         <div class="post-details">
                             <h4>Rainy Cyberpunk Cityscape</h4>
-                            <p class="prompt-text"><strong>Prompt:</strong> "A panoramic view of a <strong>futuristic Tokyo street</strong> at night, <strong>heavy rain</strong>, detailed reflection, 4k, <strong>octane render</strong>."</p>
+                            <p class="prompt-text"><span class="code-style">> prompt_query: </span>"A panoramic view of a <strong>futuristic Tokyo street</strong> at night, <strong>heavy rain</strong>, detailed reflection, 4k, <strong>octane render</strong>."</p>
                             <div class="post-meta">
                                 <span>Posted by: Head of Tech</span>
                             </div>
@@ -70,7 +75,7 @@
                         <img src="placeholder-ai-image3.jpg" alt="Catstronaut">
                         <div class="post-details">
                             <h4>The Catstronaut</h4>
-                            <p class="prompt-text"><strong>Prompt:</strong> "A <strong>cute cat</strong> wearing a cracked glass <strong>astronaut helmet</strong> floating in deep space, <strong>pastel colors</strong>, low gravity, cinematic light."</p>
+                            <p class="prompt-text"><span class="code-style">> prompt_query: </span>"A <strong>cute cat</strong> wearing a cracked glass <strong>astronaut helmet</strong> floating in deep space, <strong>pastel colors</strong>, low gravity, cinematic light."</p>
                             <div class="post-meta">
                                 <span>Posted by: InternAdda Team</span>
                             </div>
