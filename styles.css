@@ -362,6 +362,68 @@ body {
 }
 
 /* ----------------------------------
+ * 5. Footer Styling (Updated for Professionalism & Socials)
+ * ---------------------------------- */
+
+.main-footer {
+    background: var(--ai-bg-dark); /* Darker background for better contrast */
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.footer-sections {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Subtle separator */
+    margin-bottom: 20px;
+    flex-wrap: wrap; 
+}
+
+.footer-links {
+    margin-bottom: 10px; /* Space for wrap */
+}
+
+.footer-links a {
+    color: #a0c4ff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 0.9em;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+/* Social Links Styling */
+.social-links {
+    display: flex;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.social-link {
+    color: #ddd; /* Lighter icon color */
+    font-size: 1.4em;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.social-link:hover {
+    color: var(--ai-blue); 
+    transform: scale(1.1);
+}
+
+.main-footer p {
+    margin-top: 0;
+    font-size: 0.8em;
+    color: #aaa;
+}
+
+/* ----------------------------------
  * 7. Modal (Popup) Styling 
  * ---------------------------------- */
 
@@ -534,6 +596,7 @@ body {
         margin: 15% auto; /* Move higher up on mobile screens */
     }
 
+    /* Footer stacking on mobile */
     .footer-sections {
         flex-direction: column;
     }
