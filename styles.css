@@ -463,9 +463,9 @@ body {
     font-family: var(--tech-font);
     font-size: 1em;
     color: var(--text-dark);
-    line-height: 1.6; /* Adjusted line height for better spacing */
+    line-height: 1.6; 
     white-space: pre-wrap; 
-    padding-top: 10px; /* Separating content from H4 */
+    padding-top: 10px; 
 }
 
 /* FIX: Ensure the prompt text paragraph inside the modal doesn't have extra margins */
@@ -484,6 +484,8 @@ body {
     font-size: 1em; 
     color: var(--ai-blue);
     font-weight: 700;
+    /* THIS FIXES THE HORIZONTAL SPACE ISSUE by forcing the text below it */
+    display: block; 
 }
 
 /* Close Button */
