@@ -7,94 +7,93 @@
     <link rel="stylesheet" href="styles.css"> 
     <link rel="icon" href="/favicon.ico"> 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    </head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 <body>
 
     <header class="main-header">
-        <div class="container">
-            <a href="https://internadda.com/" class="logo-area">
-                <img src="logo.jpg" alt="InternAdda Logo" class="logo-img">
-                <span class="logo-text">InternAdda Playground</span>
-            </a>
-            
-            <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Toggle navigation menu">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </button>
-                <ul class="nav-links">
-                    <li><a href="https://internadda.com/">Home</a></li>
-                    <li><a href="https://courses.internadda.com/">Courses</a></li>
-                    <li><a href="https://www.internadda.com/intern/internship">Internships</a></li>
-                    <li><a href="#" class="active">AI Playground</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+        </header>
 
     <main class="ai-playground-content">
         <div class="container">
             
             <section class="hero-section">
-                <h2>🔮 AI Playground: Prompt Engineering Fun</h2>
-                <p>Welcome to the official InternAdda AI Playground. Explore stunning AI-generated art, learn from the prompts, and share your own.</p>
-                <div class="search-bar-container">
-                    <input type="text" id="prompt-search" placeholder="Search for concepts, styles, or keywords (e.g., 'cyberpunk', 'watercolor')...">
-                    <button id="search-button">Search</button>
-                </div>
-            </section>
+                </section>
 
             <section class="ai-gallery">
                 <h3>Featured AI Creations <span class="code-style">{_AI_OUTPUT_}</span></h3>
                 <div class="gallery-grid" id="gallery-grid">
                     
-                    <div class="ai-post" data-keywords="forest neon mystical digital art">
-                        <img src="placeholder-ai-image1.jpg" alt="A Forest of Neon Dreams">
+                    <div class="ai-post" data-keywords="forest neon mystical digital art">...</div>
+                    <div class="ai-post" data-keywords="cyberpunk city futuristic rain octane render">...</div>
+                    <div class="ai-post" data-keywords="cat astronaut space helmet pastel cute">...</div>
+                    <div class="ai-post" data-keywords="abstract liquid gold waves minimal" >
+                        <img src="placeholder-ai-image4.jpg" alt="Abstract Liquid Gold">
                         <div class="post-details">
-                            <h4>A Forest of Neon Dreams</h4>
-                            <p class="prompt-text"><span class="code-style">> prompt_query: </span>"A highly detailed <strong>matte painting</strong> of a <strong>mystical forest</strong> under a bioluminescent sky, deep saturation, trending on ArtStation."</p>
-                            <div class="post-meta">
-                                <span>Posted by: <strong>Co-Founder</strong> (InternAdda)</span>
-                            </div>
+                            <h4>Abstract Liquid Gold</h4>
+                            <p class="prompt-text"><span class="code-style">> prompt_query: </span>"Abstract render of <strong>liquid gold</strong> waves, minimal background, cinema 4D, dramatic lighting."</p>
+                            <div class="post-meta"><span>Posted by: CEO</span></div>
+                        </div>
+                    </div>
+
+                    <div class="ai-post hidden-post" data-keywords="space nebula galaxy science fiction">
+                        <img src="placeholder-ai-image5.jpg" alt="Deep Space Nebula">
+                        <div class="post-details">
+                            <h4>Deep Space Nebula</h4>
+                            <p class="prompt-text"><span class="code-style">> prompt_query: </span>"A panoramic photograph of a vibrant gas <strong>nebula</strong> in deep <strong>space</strong>, high resolution Hubble image."</p>
+                            <div class="post-meta"><span>Posted by: InternAdda Team</span></div>
+                        </div>
+                    </div>
+                    <div class="ai-post hidden-post" data-keywords="food sushi gourmet detailed 4k">
+                        <img src="placeholder-ai-image6.jpg" alt="Gourmet Sushi Platter">
+                        <div class="post-details">
+                            <h4>Gourmet Sushi Platter</h4>
+                            <p class="prompt-text"><span class="code-style">> prompt_query: </span>"A macro shot of a meticulously arranged <strong>gourmet sushi platter</strong>, professional food photography, shallow depth of field."</p>
+                            <div class="post-meta"><span>Posted by: Head of Partnership</span></div>
                         </div>
                     </div>
                     
-                    <div class="ai-post" data-keywords="cyberpunk city futuristic rain octane render">
-                        <img src="placeholder-ai-image2.jpg" alt="Cyberpunk Cityscape">
-                        <div class="post-details">
-                            <h4>Rainy Cyberpunk Cityscape</h4>
-                            <p class="prompt-text"><span class="code-style">> prompt_query: </span>"A panoramic view of a <strong>futuristic Tokyo street</strong> at night, <strong>heavy rain</strong>, detailed reflection, 4k, <strong>octane render</strong>."</p>
-                            <div class="post-meta">
-                                <span>Posted by: Head of Tech</span>
-                            </div>
-                        </div>
                     </div>
-
-                    <div class="ai-post" data-keywords="cat astronaut space helmet pastel cute">
-                        <img src="placeholder-ai-image3.jpg" alt="Catstronaut">
-                        <div class="post-details">
-                            <h4>The Catstronaut</h4>
-                            <p class="prompt-text"><span class="code-style">> prompt_query: </span>"A <strong>cute cat</strong> wearing a cracked glass <strong>astronaut helmet</strong> floating in deep space, <strong>pastel colors</strong>, low gravity, cinematic light."</p>
-                            <div class="post-meta">
-                                <span>Posted by: InternAdda Team</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    </div>
+                 <div class="view-more-container">
+                    <button id="view-more-button">View More Creations</button>
+                </div>
             </section>
         </div>
     </main>
 
+
     <footer class="main-footer">
         <div class="container">
-            <div class="footer-links">
-                <a href="#">Update Partners Section</a> 
-                <a href="https://www.internadda.com/faq.html">FAQ Section</a> 
-                <a href="#">Contact Us</a>
+            
+            <div class="footer-sections">
+                
+                <div class="footer-links">
+                    <a href="#">Update Partners Section</a> 
+                    <a href="https://www.internadda.com/faq.html">FAQ Section</a> 
+                    <a href="#">Contact Us</a>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://x.com/InternaddaX?t=sYyD5uOaBLaxp08kCFFKIQ&s=09" target="_blank" class="social-link" aria-label="X (Twitter)">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+
             </div>
-            <p>&copy; 2025 InternAdda. All rights reserved.</p>
+            
+            <div class="copyright-text">
+                 <p>&copy; 2025 InternAdda. All rights reserved.</p>
+            </div>
+           
         </div>
     </footer>
 
