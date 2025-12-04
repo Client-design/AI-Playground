@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('prompt-search');
     const searchButton = document.getElementById('search-button');
     const aiPosts = document.querySelectorAll('.ai-post');
-    const loadMoreButton = document.getElementById('load-more-posts'); // Get the new button
+    const loadMoreButton = document.getElementById('load-more-posts'); 
 
     /**
      * Filters the AI posts based on the text input.
@@ -69,35 +69,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Load More Functionality ---
     const POSTS_PER_LOAD = 4;
     const INITIAL_POSTS_DESKTOP = 4; 
-    const INITIAL_POSTS_MOBILE = 2; // User requested 2 on mobile/tablet
+    const INITIAL_POSTS_MOBILE = 2; 
 
     let currentlyVisiblePosts = 0;
 
-    /**
-     * Shows a batch of posts and updates the button visibility.
-     */
     const showPosts = (start, count) => {
-        let postsShownThisBatch = 0;
         for (let i = start; i < start + count && i < aiPosts.length; i++) {
             if (aiPosts[i].style.display === 'none') {
                 aiPosts[i].style.display = 'block';
                 currentlyVisiblePosts++;
-                postsShownThisBatch++;
             }
         }
 
-        // Hide the button if all posts are visible
         if (currentlyVisiblePosts >= aiPosts.length && loadMoreButton) {
             loadMoreButton.style.display = 'none';
         }
     };
 
-    /**
-     * Initializes the posts, hiding all except the first few based on screen size.
-     */
     const initializePosts = () => {
         currentlyVisiblePosts = 0;
-        // Determine initial number based on screen width (768px is the breakpoint in CSS)
         const initialCount = window.innerWidth <= 768 ? INITIAL_POSTS_MOBILE : INITIAL_POSTS_DESKTOP;
 
         aiPosts.forEach((post, index) => {
@@ -105,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         currentlyVisiblePosts = Math.min(aiPosts.length, initialCount);
 
-        // Check button visibility after initialization
         if (loadMoreButton) {
              if (aiPosts.length <= initialCount) {
                 loadMoreButton.style.display = 'none';
@@ -115,27 +104,67 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Initialize posts on DOM load
     if (aiPosts.length > 0) {
         initializePosts();
     }
     
-    // Load more handler with simulated loading animation
     if (loadMoreButton) {
         loadMoreButton.addEventListener('click', () => {
-            // 1. Start loading animation (add 'loading' class)
             loadMoreButton.classList.add('loading');
             
-            // 2. Simulate network delay (0.5 seconds) for animation effect
             setTimeout(() => {
                 showPosts(currentlyVisiblePosts, POSTS_PER_LOAD);
-                
-                // 3. Stop loading animation (remove 'loading' class)
                 loadMoreButton.classList.remove('loading');
             }, 500); 
         });
     }
 
-    // Re-initialize on window resize to respect desktop/mobile display counts
     window.addEventListener('resize', initializePosts);
+
+
+    // --- Show Full Prompt Modal Logic ---
+    const modal = document.getElementById('promptModal');
+    const modalCloseBtn = document.querySelector('.close-btn');
+    const fullPromptTextContainer = document.getElementById('full-prompt-text');
+    
+    // Function to open the modal
+    const openModal = (promptHTML) => {
+        fullPromptTextContainer.innerHTML = promptHTML;
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    };
+
+    // Function to close the modal
+    const closeModal = () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // Restore scrolling
+    };
+
+    // 1. Add click listeners to all "Show Full Prompt" buttons
+    document.querySelectorAll('.show-full-prompt-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            // Find the sibling .prompt-text element, which holds the HTML content
+            const promptElement = e.target.closest('.prompt-area').querySelector('.prompt-text');
+            // Get the entire HTML content of the prompt text
+            const fullPromptHTML = promptElement.innerHTML;
+            openModal(fullPromptHTML);
+        });
+    });
+
+    // 2. Add click listeners to the close button (x)
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    // 3. Close modal if user clicks outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    // 4. Close modal if user presses ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            closeModal();
+        }
+    });
 });
