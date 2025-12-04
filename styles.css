@@ -192,7 +192,7 @@ body {
 
 
 /* ----------------------------------
- * 4. Gallery Section (Updated Grid & View More Button)
+ * 4. Gallery Section (Prompt Truncation)
  * ---------------------------------- */
 
 .ai-gallery h3 {
@@ -225,14 +225,14 @@ body {
 
 .ai-post img {
     width: 100%;
-    height: 250px; /* Reduced height slightly for mobile-friendliness */
+    height: 250px; 
     object-fit: cover;
     display: block;
     border-bottom: 1px solid #eee;
 }
 
 .post-details {
-    padding: 12px 15px; /* Reduced padding for a slightly smaller UI */
+    padding: 12px 15px; 
 }
 
 .ai-post h4 {
@@ -241,15 +241,58 @@ body {
     font-size: 1.2em;
 }
 
+/* New: Wrapper for truncation */
+.prompt-area {
+    position: relative;
+    padding: 10px 0;
+    border-top: 1px dashed #ddd;
+    border-bottom: 1px dashed #ddd;
+    margin-bottom: 10px;
+}
+
 .prompt-text {
     font-family: var(--tech-font);
     font-style: italic;
     font-size: 0.85em;
     color: #666;
-    padding: 10px 0;
-    border-top: 1px dashed #ddd;
-    border-bottom: 1px dashed #ddd;
-    margin-bottom: 10px;
+    /* Truncation CSS: Limit to 3 lines (approx. 4.5em) */
+    max-height: 4.5em; 
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.3s ease-out;
+    margin-bottom: 0;
+}
+
+/* Fade out effect over truncated text */
+.prompt-area::after {
+    content: '';
+    position: absolute;
+    bottom: 30px; /* Position above the button */
+    left: 0;
+    right: 0;
+    height: 1.5em; /* Height of the fade effect */
+    background: linear-gradient(to bottom, transparent, var(--card-background));
+    pointer-events: none;
+    z-index: 2;
+}
+
+.show-full-prompt-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 0 0 0;
+    display: block;
+    width: 100%;
+    text-align: left;
+    transition: color 0.2s;
+}
+
+.show-full-prompt-btn:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }
 
 .post-meta {
@@ -271,11 +314,9 @@ body {
     font-size: 1.05em;
     border-radius: 5px;
     cursor: pointer;
-    /* Added transition for opacity and combined button properties for better control */
     transition: background 0.3s, transform 0.1s, opacity 0.3s; 
     font-weight: 600;
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-    /* Flex properties to center content (text/spinner) and center the button itself */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -289,10 +330,10 @@ body {
 
 /* Loading State for professional animation */
 #load-more-posts.loading {
-    pointer-events: none; /* Disable clicks while loading */
+    pointer-events: none; 
     opacity: 0.8;
     background: #0056b3;
-    min-width: 200px; /* Prevents button size jumping when text is hidden */
+    min-width: 200px; 
 }
 
 /* Spinner Animation CSS */
@@ -317,69 +358,70 @@ body {
 }
 
 #load-more-posts.loading .button-text {
-    visibility: hidden; /* Hide text when loading */
+    visibility: hidden; 
 }
 
 /* ----------------------------------
- * 5. Footer Styling (Updated for Professionalism & Socials)
+ * 7. Modal (Popup) Styling 
  * ---------------------------------- */
 
-.main-footer {
-    background: var(--ai-bg-dark); /* Darker background for better contrast */
-    color: white;
-    padding: 30px 0;
-    text-align: center;
-    margin-top: 50px;
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 100; /* High z-index to cover everything */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity backdrop */
+    padding-top: 50px; 
 }
 
-.footer-sections {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Subtle separator */
-    margin-bottom: 20px;
-    flex-wrap: wrap; 
+.modal-content {
+    background-color: var(--card-background);
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%; 
+    max-width: 700px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
 }
 
-.footer-links {
-    margin-bottom: 10px; /* Space for wrap */
-}
-
-.footer-links a {
-    color: #a0c4ff;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 0.9em;
-    transition: color 0.3s;
-}
-
-.footer-links a:hover {
+.modal-content h4 {
     color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
 }
 
-/* Social Links Styling */
-.social-links {
-    display: flex;
-    gap: 18px;
-    margin-top: 10px;
+.prompt-text-modal {
+    font-family: var(--tech-font);
+    font-size: 1em;
+    color: var(--text-dark);
+    line-height: 1.8;
+    white-space: pre-wrap; /* Preserve formatting if full prompt is multi-line */
 }
 
-.social-link {
-    color: #ddd; /* Lighter icon color */
-    font-size: 1.4em;
-    transition: color 0.3s, transform 0.3s;
-}
-
-.social-link:hover {
-    color: var(--ai-blue); 
-    transform: scale(1.1);
-}
-
-.main-footer p {
-    margin-top: 0;
-    font-size: 0.8em;
+/* Close Button */
+.close-btn {
     color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    transition: color 0.2s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: var(--text-dark);
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /* ----------------------------------
@@ -387,7 +429,6 @@ body {
  * ---------------------------------- */
 
 @media (max-width: 1200px) {
-    /* Show 3 columns on medium screens */
     .gallery-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
@@ -407,7 +448,6 @@ body {
         font-size: 1.3em;
     }
 
-    /* Display hamburger menu and hide links */
     .menu-toggle {
         display: block;
     }
@@ -428,7 +468,6 @@ body {
         display: flex;
     }
 
-    /* Mobile Menu UI Enhancement: Separate links with lines */
     .nav-links li {
         width: 100%;
         border-bottom: 1px solid #f0f0f0;
@@ -447,7 +486,6 @@ body {
         font-weight: 600;
     }
     
-    /* Search bar stacking */
     .search-bar-container {
         flex-direction: column;
         border-radius: 8px;
@@ -485,9 +523,17 @@ body {
 
     .prompt-text {
         font-size: 0.8em;
+        max-height: 3.8em; /* Adjusted for smaller mobile text, 3 lines */
     }
 
-    /* Footer stacking on mobile */
+    .prompt-area::after {
+        bottom: 30px; 
+    }
+
+    .modal-content {
+        margin: 15% auto; /* Move higher up on mobile screens */
+    }
+
     .footer-sections {
         flex-direction: column;
     }
