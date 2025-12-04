@@ -463,8 +463,27 @@ body {
     font-family: var(--tech-font);
     font-size: 1em;
     color: var(--text-dark);
-    line-height: 1.8;
-    white-space: pre-wrap; /* Preserve formatting if full prompt is multi-line */
+    line-height: 1.6; /* Adjusted line height for better spacing */
+    white-space: pre-wrap; 
+    padding-top: 10px; /* Separating content from H4 */
+}
+
+/* FIX: Ensure the prompt text paragraph inside the modal doesn't have extra margins */
+.prompt-text-modal .prompt-text {
+    max-height: none; 
+    overflow: visible;
+    margin: 0; 
+    padding: 0;
+}
+
+/* FIX: Target the code style span inside the modal to remove padding/background and fix alignment */
+.prompt-text-modal .code-style {
+    background: none;
+    padding: 0;
+    margin-bottom: 5px; 
+    font-size: 1em; 
+    color: var(--ai-blue);
+    font-weight: 700;
 }
 
 /* Close Button */
