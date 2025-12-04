@@ -1,7 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Mobile Menu Toggle ---
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+
+    // --- Prompt Search Functionality ---
     const searchInput = document.getElementById('prompt-search');
     const searchButton = document.getElementById('search-button');
-    const galleryGrid = document.getElementById('gallery-grid');
     const aiPosts = document.querySelectorAll('.ai-post');
 
     /**
@@ -26,8 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- Event Listeners ---
-
     // 1. Search button click
     searchButton.addEventListener('click', () => {
         filterPosts(searchInput.value);
@@ -45,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Clear search and show all posts if the user focuses and then blurs an empty input
+    // Clear search and show all posts if the user clears the input
     searchInput.addEventListener('blur', () => {
         if (searchInput.value.trim() === '') {
             aiPosts.forEach(post => {
