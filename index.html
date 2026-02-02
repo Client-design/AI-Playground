@@ -3,284 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Playground | India's AI Learning Platform for Students</title>
+    <title>Internadda AI Playground | India's AI Revolution Lab for Students</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="logo.jpg" type="image/jpeg">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo">
-                <img src="logo.jpg" alt="AI Playground Logo">
-                <span>AI Playground</span>
-            </a>
-            
-            <ul class="nav-menu">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#ai-tools">AI Tools</a></li>
-                <li><a href="#categories">Categories</a></li>
-                <li><a href="#playground">Playground</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li>
-                    <div class="search-container">
-                        <input type="text" id="search-input" placeholder="Search AI tools...">
-                        <button id="search-btn"><i class="fas fa-search"></i></button>
+    <!-- Neural Network Canvas Background -->
+    <canvas id="neuralCanvas"></canvas>
+    
+    <!-- Main Content Container -->
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="logo.jpg" alt="Internadda AI Playground">
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link active">Home</a>
+                    <a href="#ai-tools" class="nav-link">AI Tools</a>
+                    <a href="#playground" class="nav-link">Playground</a>
+                    <a href="#" class="nav-link">About</a>
+                    <a href="#" class="nav-link">Contact</a>
+                </div>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">AI REVOLUTION LAB</div>
+                <h1 class="hero-title">
+                    <span class="hero-title-line">India's AI Playground</span>
+                    <span class="hero-title-line gradient-text">for Students</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Learn AI tools. Understand how they work. Build the future.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn-primary">Explore AI Tools</button>
+                    <button class="btn-secondary">Start Learning</button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number gradient-text">30+</div>
+                    <div class="stat-label">AI Tools</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number gradient-text">10K+</div>
+                    <div class="stat-label">Learners</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number gradient-text">4.8<span class="stat-rating">⭐</span></div>
+                    <div class="stat-label">Rating</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Tools Section -->
+        <section class="ai-tools-section" id="ai-tools">
+            <div class="section-header">
+                <h2 class="section-title">AI Tools <span class="gradient-text">Playground</span></h2>
+                <p class="section-subtitle">Explore, experiment, and master cutting-edge AI technologies</p>
+                
+                <!-- Search and Filter -->
+                <div class="tools-filter">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search AI tools by name, category, or use case...">
                     </div>
-                </li>
-            </ul>
-            
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">India's AI Playground for Students</h1>
-            <p class="hero-subtitle">Learn how modern AI tools work and use them for study, coding, design, research & creativity.</p>
-            <div class="hero-buttons">
-                <a href="#ai-tools" class="btn btn-primary">Explore AI Tools</a>
-                <a href="#playground" class="btn btn-secondary">Start Learning</a>
-            </div>
-        </div>
-        <div class="hero-animation">
-            <canvas id="ai-canvas"></canvas>
-        </div>
-    </div>
-</section>
-
-    <!-- Stats Section -->
-<section class="stats">
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-microchip"></i></div>
-                <h3 class="stat-number">ISO 9001</h3>
-                <p class="stat-text">Certified Learning</p>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3 class="stat-number">Safe AI</h3>
-                <p class="stat-text">Ethics Prioritized</p>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-handshake"></i></div>
-                <h3 class="stat-number">50+</h3>
-                <p class="stat-text">Industry Partners</p>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-bolt"></i></div>
-                <h3 class="stat-number">Real-time</h3>
-                <p class="stat-text">Hands-on Demos</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="ai-tools" class="ai-tools">
-    <div class="container">
-        <h2 class="section-title">AI Tools Library</h2>
-        <div class="tools-grid" id="tools-container">
-            </div>
-        
-        <div class="view-more-wrapper">
-            <button id="view-more-btn" class="btn-glow">
-                <span>View More AI Tools</span>
-                <i class="fas fa-chevron-down"></i>
-            </button>
-        </div>
-    </div>
-</section>
-
-    <!-- Categories Section -->
-    <section id="categories" class="categories">
-        <div class="container">
-            <h2 class="section-title">Explore AI by Category</h2>
-            <p class="section-subtitle">Filter tools based on your learning needs</p>
-            
-            <div class="category-filters">
-                <button class="filter-btn active" data-category="all">All Tools</button>
-                <button class="filter-btn" data-category="writing">Writing & Study</button>
-                <button class="filter-btn" data-category="coding">Coding & Dev</button>
-                <button class="filter-btn" data-category="design">Design & Media</button>
-                <button class="filter-btn" data-category="video">Video & Audio</button>
-                <button class="filter-btn" data-category="productivity">Productivity & Research</button>
-                <button class="filter-btn" data-category="advanced">Student & Advanced</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- AI Tools Grid Section -->
-    <section id="ai-tools" class="ai-tools">
-        <div class="container">
-            <h2 class="section-title">AI Tools Library</h2>
-            <p class="section-subtitle">Discover, understand, and learn to use modern AI tools</p>
-            
-            <div class="tools-grid" id="tools-container">
-                <!-- AI Tool Cards will be dynamically generated here -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="container">
-            <h2 class="section-title">What Students Say</h2>
-            <p class="section-subtitle">Join thousands of students mastering AI</p>
-            
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"AI Playground made complex AI concepts simple to understand. The technical explanations helped me in my final year project!"</p>
+                    <div class="category-filters">
+                        <button class="category-btn active" data-category="all">All</button>
+                        <button class="category-btn" data-category="chat">Chat & Text</button>
+                        <button class="category-btn" data-category="code">Code & Dev</button>
+                        <button class="category-btn" data-category="image">Image & Design</button>
+                        <button class="category-btn" data-category="video">Video & Audio</button>
+                        <button class="category-btn" data-category="learning">Learning</button>
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <i class="fas fa-user-circle"></i>
-                        </div>
-                        <div class="author-info">
-                            <h4>Rahul Sharma</h4>
-                            <p>Computer Science Student, IIT Delhi</p>
-                        </div>
+                </div>
+            </div>
+
+            <!-- AI Tools Grid -->
+            <div class="ai-tools-grid" id="aiToolsGrid">
+                <!-- AI cards will be generated by JavaScript -->
+            </div>
+
+            <!-- View More Button -->
+            <div class="view-more-container">
+                <button class="view-more-btn" id="viewMoreBtn">
+                    <span class="btn-text">View More AI Tools</span>
+                    <span class="btn-icon">
+                        <i class="fas fa-chevron-down"></i>
+                    </span>
+                    <span class="btn-glow"></span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-logo-section">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="Internadda">
+                    </div>
+                    <p class="footer-mission">India's AI Playground for Students. Learn AI tools. Understand how they work. Build the future.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"As a design student, learning about AI image generation tools here gave me a competitive edge in my portfolio."</p>
+                <div class="footer-links-section">
+                    <div class="footer-column">
+                        <h3 class="footer-column-title">AI Tools</h3>
+                        <a href="#" class="footer-link">Chat & Text AI</a>
+                        <a href="#" class="footer-link">Code & Dev AI</a>
+                        <a href="#" class="footer-link">Image & Design AI</a>
+                        <a href="#" class="footer-link">Video & Audio AI</a>
+                        <a href="#" class="footer-link">Learning AI</a>
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <i class="fas fa-user-circle"></i>
-                        </div>
-                        <div class="author-info">
-                            <h4>Priya Patel</h4>
-                            <p>Design Student, NID Ahmedabad</p>
-                        </div>
+                    
+                    <div class="footer-column">
+                        <h3 class="footer-column-title">Learning</h3>
+                        <a href="#" class="footer-link">AI Tutorials</a>
+                        <a href="#" class="footer-link">AI Projects</a>
+                        <a href="#" class="footer-link">AI Challenges</a>
+                        <a href="#" class="footer-link">AI Certifications</a>
+                        <a href="#" class="footer-link">AI Resources</a>
                     </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"The coding AI tools section helped me understand how GitHub Copilot works. Now I'm 3x more productive in my coding assignments."</p>
+                    
+                    <div class="footer-column">
+                        <h3 class="footer-column-title">Community</h3>
+                        <a href="#" class="footer-link">AI Forums</a>
+                        <a href="#" class="footer-link">Student Groups</a>
+                        <a href="#" class="footer-link">Mentorship</a>
+                        <a href="#" class="footer-link">Events</a>
+                        <a href="#" class="footer-link">Internships</a>
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <i class="fas fa-user-circle"></i>
-                        </div>
-                        <div class="author-info">
-                            <h4>Arjun Mehta</h4>
-                            <p>Engineering Student, BITS Pilani</p>
-                        </div>
+                    
+                    <div class="footer-column">
+                        <h3 class="footer-column-title">Company</h3>
+                        <a href="#" class="footer-link">About Us</a>
+                        <a href="#" class="footer-link">Careers</a>
+                        <a href="#" class="footer-link">Contact</a>
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Terms of Service</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section id="playground" class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2 class="cta-title">Start Learning AI Today</h2>
-                <p class="cta-subtitle">Join India's largest student community exploring AI tools and technologies. Build skills that matter for your future career.</p>
-                <a href="#ai-tools" class="btn btn-primary btn-large">Get Started for Free</a>
-            </div>
-            <div class="cta-image">
-                <div class="ai-icon">
-                    <i class="fas fa-brain"></i>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-logo">Internadda</div>
-                    <p class="footer-description">India's premier AI learning platform for students. Explore, understand, and master modern AI tools.</p>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://x.com/InternaddaX" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Learn</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://courses.internadda.com/">Browse Courses</a></li>
-                        <li><a href="https://courses.internadda.com/">Free Courses</a></li>
-                        <li><a href="#">Paid Courses</a></li>
-                        <li><a href="https://internadda.com/community/academy.html">Offline Academy</a></li>
-                        <li><a href="#">Become an Instructor</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Intern</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://internadda.com/intern/internship.html">Find Internships</a></li>
-                         <li><a href="https://employee.internadda.com/">For Employees</a></li>
-                        <li><a href="#">For Companies</a></li>
-                        <li><a href="#">Success Stories</a></li>
-                        <li><a href="#">Career Coaching</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Career Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://check-ats.internadda.com/">ATS Score Checker</a></li>
-                        <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
-                        <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
-                        <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
-                        <li><a href="https://ai.internadda.com/" target="_blank">AI Playground</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">InternAdda</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://internadda.com/about.html">About Us</a></li>
-                        <li><a href="https://internadda.com/contact.html">Contact Us</a></li>
-                        <li><a href="https://internadda.com/faq.html">FAQ / Help Center</a></li>
-                        <li><a href="https://internadda.com/terms.html">Terms & Conditions</a></li>
-                        <li><a href="https://internadda.com/refund.html">Refund Policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links-column">
-                    <h3 class="footer-links-title">Community</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://internadda.com/community/join.html">Join Community</a></li>
-                        <li><a href="https://internadda.com/community/partners.html">Partners</a></li>
-                        <li><a href="https://blog.internadda.com/">Blog</a></li>
-                        <li><a href="https://internadda.com/community/academy.html">Offline Academy</a></li>
-                    </ul>
-                </div>
-            </div>
-
+            
             <div class="footer-bottom">
-                <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
+                <p class="copyright">© 2023 Internadda AI Playground. All rights reserved. Designed with ❤️ for India's AI students.</p>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 
+    <!-- JavaScript -->
     <script src="main.js"></script>
 </body>
 </html>
