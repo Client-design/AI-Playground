@@ -23,8 +23,8 @@
                     <a href="#" class="nav-link active">Home</a>
                     <a href="#ai-tools" class="nav-link">AI Tools</a>
                     <a href="#playground" class="nav-link">Playground</a>
-                    <a href="#" class="nav-link">About</a>
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
                 </div>
                 <div class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -44,8 +44,8 @@
                     Learn AI tools. Understand how they work. Build the future.
                 </p>
                 <div class="hero-buttons">
-                    <button class="btn-primary">Explore AI Tools</button>
-                    <button class="btn-secondary">Start Learning</button>
+                    <button class="btn-primary" id="exploreBtn">Explore AI Tools</button>
+                    <button class="btn-secondary" id="learningBtn">Start Learning</button>
                 </div>
             </div>
             <div class="hero-stats">
@@ -100,67 +100,154 @@
                         <i class="fas fa-chevron-down"></i>
                     </span>
                     <span class="btn-glow"></span>
+                    <span class="btn-sparkles">
+                        <i class="fas fa-sparkle"></i>
+                        <i class="fas fa-sparkle"></i>
+                        <i class="fas fa-sparkle"></i>
+                    </span>
                 </button>
+                <p class="view-more-counter">Showing <span id="visibleCount">12</span> of 30 AI Tools</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="contact-container">
+                <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
+                <p class="section-subtitle">Have questions about AI tools? Our team is here to help you learn and grow.</p>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h3>Email Us</h3>
+                            <p>ai.support@internadda.com</p>
+                            <p>Response time: 24 hours</p>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3>Live Chat</h3>
+                            <p>Available Mon-Fri, 9AM-6PM</p>
+                            <button class="chat-btn">Start Chat</button>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>Community</h3>
+                            <p>Join 10K+ students in our AI community</p>
+                            <button class="community-btn">Join Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Send us a Message</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <select required>
+                                    <option value="" disabled selected>Select Inquiry Type</option>
+                                    <option>AI Tool Help</option>
+                                    <option>Learning Path</option>
+                                    <option>Technical Support</option>
+                                    <option>Partnership</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Your Message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">Send Message <i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Footer -->
         <footer>
-            <div class="footer-container">
-                <div class="footer-logo-section">
-                    <div class="footer-logo">
-                        <img src="logo.jpg" alt="Internadda">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <div class="footer-logo">Internadda</div>
+                        <p class="footer-description">Transforming careers through learning, interning, and earning opportunities.</p>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/company/internadda-india" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://x.com/InternaddaX" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/@theinternadda" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.instagram.com/internadda.india" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                        </div>
                     </div>
-                    <p class="footer-mission">India's AI Playground for Students. Learn AI tools. Understand how they work. Build the future.</p>
-                    <div class="footer-social">
-                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+
+                    <div class="footer-links-column">
+                        <h3 class="footer-links-title">Learn</h3>
+                        <ul class="footer-links">
+                            <li><a href="https://courses.internadda.com/">Browse Courses</a></li>
+                            <li><a href="https://courses.internadda.com/">Free Courses</a></li>
+                            <li><a href="#">Paid Courses</a></li>
+                            <li><a href="https://internadda.com/community/academy.html">Offline Academy</a></li>
+                            <li><a href="#">Become an Instructor</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links-column">
+                        <h3 class="footer-links-title">Intern</h3>
+                        <ul class="footer-links">
+                            <li><a href="https://internadda.com/intern/internship.html">Find Internships</a></li>
+                             <li><a href="https://employee.internadda.com/">For Employees</a></li>
+                            <li><a href="#">For Companies</a></li>
+                            <li><a href="#">Success Stories</a></li>
+                            <li><a href="#">Career Coaching</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-links-column">
+                        <h3 class="footer-links-title">Career Tools</h3>
+                        <ul class="footer-links">
+                            <li><a href="https://check-ats.internadda.com/">ATS Score Checker</a></li>
+                            <li><a href="https://cv-builder.internadda.com/">Resume Builder</a></li>
+                            <li><a href="https://interview-preparation.internadda.com">Interview Prep</a></li>
+                            <li><a href="https://letter-builder.internadda.com/">Cover Letter Gen</a></li>
+                            <li><a href="https://ai.internadda.com/" target="_blank">AI Playground</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links-column">
+                        <h3 class="footer-links-title">InternAdda</h3>
+                        <ul class="footer-links">
+                            <li><a href="https://internadda.com/about.html">About Us</a></li>
+                            <li><a href="https://internadda.com/contact.html">Contact Us</a></li>
+                            <li><a href="https://internadda.com/faq.html">FAQ / Help Center</a></li>
+                            <li><a href="https://internadda.com/terms.html">Terms & Conditions</a></li>
+                            <li><a href="https://internadda.com/refund.html">Refund Policy</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links-column">
+                        <h3 class="footer-links-title">Community</h3>
+                        <ul class="footer-links">
+                            <li><a href="https://internadda.com/community/join.html">Join Community</a></li>
+                            <li><a href="https://internadda.com/community/partners.html">Partners</a></li>
+                            <li><a href="https://blog.internadda.com/">Blog</a></li>
+                            <li><a href="https://internadda.com/community/academy.html">Offline Academy</a></li>
+                        </ul>
                     </div>
                 </div>
-                
-                <div class="footer-links-section">
-                    <div class="footer-column">
-                        <h3 class="footer-column-title">AI Tools</h3>
-                        <a href="#" class="footer-link">Chat & Text AI</a>
-                        <a href="#" class="footer-link">Code & Dev AI</a>
-                        <a href="#" class="footer-link">Image & Design AI</a>
-                        <a href="#" class="footer-link">Video & Audio AI</a>
-                        <a href="#" class="footer-link">Learning AI</a>
-                    </div>
-                    
-                    <div class="footer-column">
-                        <h3 class="footer-column-title">Learning</h3>
-                        <a href="#" class="footer-link">AI Tutorials</a>
-                        <a href="#" class="footer-link">AI Projects</a>
-                        <a href="#" class="footer-link">AI Challenges</a>
-                        <a href="#" class="footer-link">AI Certifications</a>
-                        <a href="#" class="footer-link">AI Resources</a>
-                    </div>
-                    
-                    <div class="footer-column">
-                        <h3 class="footer-column-title">Community</h3>
-                        <a href="#" class="footer-link">AI Forums</a>
-                        <a href="#" class="footer-link">Student Groups</a>
-                        <a href="#" class="footer-link">Mentorship</a>
-                        <a href="#" class="footer-link">Events</a>
-                        <a href="#" class="footer-link">Internships</a>
-                    </div>
-                    
-                    <div class="footer-column">
-                        <h3 class="footer-column-title">Company</h3>
-                        <a href="#" class="footer-link">About Us</a>
-                        <a href="#" class="footer-link">Careers</a>
-                        <a href="#" class="footer-link">Contact</a>
-                        <a href="#" class="footer-link">Privacy Policy</a>
-                        <a href="#" class="footer-link">Terms of Service</a>
-                    </div>
+
+                <div class="footer-bottom">
+                    <p>© 2025 Internadda. All rights reserved. | Developed by Internadda Team</p>
                 </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p class="copyright">© 2023 Internadda AI Playground. All rights reserved. Designed with ❤️ for India's AI students.</p>
             </div>
         </footer>
     </div>
