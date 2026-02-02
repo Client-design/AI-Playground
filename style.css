@@ -833,3 +833,44 @@ section {
         font-size: 0.9rem;
     }
 }
+
+
+/* =========================================
+   7. FOOTER STYLES (Updated)
+   ========================================= */
+footer {
+    background-color: #0f172a;
+    color: #cbd5e0;
+    padding: 80px 0 20px;
+    font-size: 0.95rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.8fr repeat(5, 1fr); 
+    gap: 25px;
+    margin-bottom: 60px;
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.social-links { 
+    display: flex; 
+    gap: 15px; 
+    transition: all 0.3s ease;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
