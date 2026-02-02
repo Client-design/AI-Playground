@@ -24,58 +24,48 @@ function initAIAnimation() {
             this.glowIntensity = Math.random() * 0.5 + 0.5;
             this.pulseSpeed = Math.random() * 0.05 + 0.02;
             this.pulseOffset = Math.random() * Math.PI * 2;
+            this.waveOffset = Math.random() * Math.PI * 2;
+            this.originalX = this.x;
+            this.originalY = this.y;
         }
         
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
+        update(time) {
+            // Add subtle wave motion
+            this.x = this.originalX + Math.sin(time * 0.001 + this.waveOffset) * 20;
+            this.y = this.originalY + Math.cos(time * 0.001 + this.waveOffset) * 20;
             
-            // Boundary check
-            if (this.x > canvas.width) this.x = 0;
-            if (this.x < 0) this.x = canvas.width;
-            if (this.y > canvas.height) this.y = 0;
-            if (this.y < 0) this.y = canvas.height;
-            
-            // Mouse interaction
+            // Add mouse interaction
             const dx = this.x - mouse.x;
             const dy = this.y - mouse.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
             if (distance < mouse.radius) {
-                this.speedX += (dx / distance) * 0.1;
-                this.speedY += (dy / distance) * 0.1;
-                this.size = Math.min(this.size + 0.1, 3);
+                const force = (mouse.radius - distance) / mouse.radius;
+                this.x += (dx / distance) * force * 5;
+                this.y += (dy / distance) * force * 5;
+                this.size = Math.min(this.size + 0.2, 4);
             } else {
                 // Slowly return to original size
                 this.size = Math.max(this.size - 0.02, 0.5);
             }
-            
-            // Limit speed
-            const currentSpeed = Math.sqrt(this.speedX * this.speedX + this.speedY * this.speedY);
-            if (currentSpeed > 2) {
-                this.speedX = (this.speedX / currentSpeed) * 2;
-                this.speedY = (this.speedY / currentSpeed) * 2;
-            }
-            
-            // Apply friction
-            this.speedX *= 0.99;
-            this.speedY *= 0.99;
         }
         
-        draw() {
+        draw(time) {
             // Pulsing effect
-            const pulse = Math.sin(Date.now() * this.pulseSpeed + this.pulseOffset) * 0.3 + 0.7;
+            const pulse = Math.sin(time * this.pulseSpeed + this.pulseOffset) * 0.3 + 0.7;
             const currentSize = this.size * pulse;
             
-            // Glow effect
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, currentSize * 3, 0, Math.PI * 2);
+            // Enhanced glow effect
             const gradient = ctx.createRadialGradient(
                 this.x, this.y, 0,
-                this.x, this.y, currentSize * 3
+                this.x, this.y, currentSize * 4
             );
-            gradient.addColorStop(0, this.color.replace('0.8', '0.3'));
-            gradient.addColorStop(1, this.color.replace('0.8', '0'));
+            gradient.addColorStop(0, this.color.replace('0.8', '0.5'));
+            gradient.addColorStop(0.5, this.color.replace('0.8', '0.2'));
+            gradient.addColorStop(1, 'transparent');
+            
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, currentSize * 4, 0, Math.PI * 2);
             ctx.fillStyle = gradient;
             ctx.fill();
             
@@ -87,23 +77,21 @@ function initAIAnimation() {
             
             // Inner bright core
             ctx.beginPath();
-            ctx.arc(this.x, this.y, currentSize * 0.5, 0, Math.PI * 2);
+            ctx.arc(this.x, this.y, currentSize * 0.3, 0, Math.PI * 2);
             ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
             ctx.fill();
         }
     }
     
-    // Connection line class
+    // Connection line class with enhanced effects
     class Connection {
         constructor(particle1, particle2) {
             this.p1 = particle1;
             this.p2 = particle2;
-            this.length = Math.sqrt(
-                Math.pow(this.p2.x - this.p1.x, 2) + 
-                Math.pow(this.p2.y - this.p1.y, 2)
-            );
             this.active = false;
             this.opacity = 0;
+            this.pulsePos = Math.random();
+            this.pulseSpeed = Math.random() * 0.002 + 0.001;
         }
         
         update() {
@@ -114,15 +102,18 @@ function initAIAnimation() {
             // Activate connection if particles are close enough
             if (currentDistance < 150) {
                 this.active = true;
-                this.opacity = Math.min(this.opacity + 0.05, 0.5 * (1 - currentDistance / 150));
+                this.opacity = Math.min(this.opacity + 0.08, 0.4 * (1 - currentDistance / 150));
             } else {
                 this.active = false;
-                this.opacity = Math.max(this.opacity - 0.02, 0);
+                this.opacity = Math.max(this.opacity - 0.03, 0);
             }
+            
+            // Update pulse position
+            this.pulsePos = (this.pulsePos + this.pulseSpeed) % 1;
         }
         
         draw() {
-            if (!this.active || this.opacity < 0.1) return;
+            if (!this.active || this.opacity < 0.05) return;
             
             // Create gradient for the connection line
             const gradient = ctx.createLinearGradient(
@@ -130,25 +121,35 @@ function initAIAnimation() {
                 this.p2.x, this.p2.y
             );
             
-            gradient.addColorStop(0, `rgba(${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(Math.random() * 100 + 155)}, 255, ${this.opacity})`);
-            gradient.addColorStop(0.5, `rgba(255, 255, 255, ${this.opacity * 0.8})`);
-            gradient.addColorStop(1, `rgba(${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(Math.random() * 100 + 155)}, 255, ${this.opacity})`);
+            const color1 = `rgba(${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(Math.random() * 100 + 155)}, 255, ${this.opacity})`;
+            const color2 = `rgba(255, 255, 255, ${this.opacity * 0.8})`;
+            
+            gradient.addColorStop(0, color1);
+            gradient.addColorStop(0.5, color2);
+            gradient.addColorStop(1, color1);
             
             ctx.beginPath();
             ctx.moveTo(this.p1.x, this.p1.y);
             ctx.lineTo(this.p2.x, this.p2.y);
             ctx.strokeStyle = gradient;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 1.5;
+            ctx.lineCap = 'round';
             ctx.stroke();
             
-            // Add pulse effect along the connection
-            const pulsePos = (Date.now() * 0.002) % 1;
-            const pulseX = this.p1.x + (this.p2.x - this.p1.x) * pulsePos;
-            const pulseY = this.p1.y + (this.p2.y - this.p1.y) * pulsePos;
+            // Add moving pulse effect along the connection
+            const pulseX = this.p1.x + (this.p2.x - this.p1.x) * this.pulsePos;
+            const pulseY = this.p1.y + (this.p2.y - this.p1.y) * this.pulsePos;
+            
+            const pulseGradient = ctx.createRadialGradient(
+                pulseX, pulseY, 0,
+                pulseX, pulseY, 4
+            );
+            pulseGradient.addColorStop(0, `rgba(255, 255, 255, ${this.opacity})`);
+            pulseGradient.addColorStop(1, 'transparent');
             
             ctx.beginPath();
-            ctx.arc(pulseX, pulseY, 2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+            ctx.arc(pulseX, pulseY, 4, 0, Math.PI * 2);
+            ctx.fillStyle = pulseGradient;
             ctx.fill();
         }
     }
@@ -157,7 +158,7 @@ function initAIAnimation() {
     const mouse = {
         x: canvas.width / 2,
         y: canvas.height / 2,
-        radius: 100
+        radius: 150
     };
     
     canvas.addEventListener('mousemove', (e) => {
@@ -173,43 +174,45 @@ function initAIAnimation() {
     
     // Create particles
     const particles = [];
-    const particleCount = window.innerWidth < 768 ? 60 : 120;
+    const particleCount = window.innerWidth < 768 ? 80 : 150;
     
     for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle());
     }
     
-    // Create connections
+    // Create connections (only between nearby particles to optimize)
     const connections = [];
     for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-            connections.push(new Connection(particles[i], particles[j]));
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 200) {
+                connections.push(new Connection(particles[i], particles[j]));
+            }
         }
     }
     
     // Animation loop
+    let time = 0;
     function animate() {
+        time = Date.now();
+        
         // Clear with a fade effect for trails
         ctx.fillStyle = 'rgba(10, 10, 26, 0.05)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         // Update and draw particles
         particles.forEach(particle => {
-            particle.update();
-            particle.draw();
+            particle.update(time);
+            particle.draw(time);
         });
         
         // Update and draw connections
         connections.forEach(connection => {
             connection.update();
             connection.draw();
-        });
-        
-        // Add a subtle wave effect to all particles
-        const time = Date.now() * 0.001;
-        particles.forEach(particle => {
-            particle.x += Math.sin(time + particle.y * 0.01) * 0.1;
-            particle.y += Math.cos(time + particle.x * 0.01) * 0.1;
         });
         
         requestAnimationFrame(animate);
@@ -219,7 +222,7 @@ function initAIAnimation() {
     animate();
 }
 
-// AI Tools Data
+// AI Tools Data with URLs
 const aiTools = [
     {
         name: "ChatGPT",
@@ -227,7 +230,8 @@ const aiTools = [
         description: "Advanced conversational AI for answering questions, writing, and problem-solving.",
         technical: "Transformer-based language model fine-tuned with reinforcement learning from human feedback.",
         studentUse: "Research assistance, essay writing, coding help, language learning.",
-        icon: "fa-comment-dots"
+        icon: "fa-comment-dots",
+        url: "https://chatgpt.com/"
     },
     {
         name: "Claude",
@@ -235,7 +239,8 @@ const aiTools = [
         description: "AI assistant focused on helpful, harmless, and honest conversations.",
         technical: "Constitutional AI trained with principles to ensure safe and ethical responses.",
         studentUse: "Brainstorming ideas, editing documents, ethical dilemma analysis.",
-        icon: "fa-robot"
+        icon: "fa-robot",
+        url: "https://claude.ai/"
     },
     {
         name: "Gemini",
@@ -243,7 +248,8 @@ const aiTools = [
         description: "Multimodal AI that understands and generates text, code, images, and more.",
         technical: "Multimodal transformer architecture capable of processing different data types.",
         studentUse: "Multimedia projects, cross-disciplinary research, creative ideation.",
-        icon: "fa-gem"
+        icon: "fa-gem",
+        url: "https://gemini.google.com/"
     },
     {
         name: "Quillbot",
@@ -251,7 +257,8 @@ const aiTools = [
         description: "AI-powered paraphrasing tool to rewrite and enhance writing.",
         technical: "Advanced NLP algorithms for sentence restructuring while preserving meaning.",
         studentUse: "Paraphrasing research, improving writing style, avoiding plagiarism.",
-        icon: "fa-feather-alt"
+        icon: "fa-feather-alt",
+        url: "https://quillbot.com/"
     },
     {
         name: "Notion AI",
@@ -259,7 +266,8 @@ const aiTools = [
         description: "AI writing assistant integrated within Notion workspace.",
         technical: "Custom language model fine-tuned for productivity and organization tasks.",
         studentUse: "Note summarization, project planning, content organization.",
-        icon: "fa-sticky-note"
+        icon: "fa-sticky-note",
+        url: "https://www.notion.so/product/ai"
     },
     {
         name: "Grammarly",
@@ -267,7 +275,8 @@ const aiTools = [
         description: "AI writing assistant that checks grammar, tone, and clarity.",
         technical: "Rule-based and ML algorithms for grammar checking and style improvement.",
         studentUse: "Proofreading essays, improving writing style, learning grammar rules.",
-        icon: "fa-spell-check"
+        icon: "fa-spell-check",
+        url: "https://www.grammarly.com/"
     },
     {
         name: "GitHub Copilot",
@@ -275,7 +284,8 @@ const aiTools = [
         description: "AI pair programmer that suggests code completions.",
         technical: "Codex model trained on billions of lines of public code.",
         studentUse: "Learning programming, code completion, understanding syntax.",
-        icon: "fa-code"
+        icon: "fa-code",
+        url: "https://github.com/features/copilot"
     },
     {
         name: "Replit AI",
@@ -283,7 +293,8 @@ const aiTools = [
         description: "AI coding assistant within the Replit development environment.",
         technical: "Specialized code generation model with browser-based execution.",
         studentUse: "Learning to code, building projects, debugging assistance.",
-        icon: "fa-laptop-code"
+        icon: "fa-laptop-code",
+        url: "https://replit.com/site/ai"
     },
     {
         name: "Codeium",
@@ -291,7 +302,8 @@ const aiTools = [
         description: "Free AI-powered code completion tool for multiple IDEs.",
         technical: "Deep learning model trained on diverse codebases across languages.",
         studentUse: "Free coding assistance, learning new languages, project development.",
-        icon: "fa-bolt"
+        icon: "fa-bolt",
+        url: "https://codeium.com/"
     },
     {
         name: "Tabnine",
@@ -299,7 +311,8 @@ const aiTools = [
         description: "AI code completion that learns from your coding patterns.",
         technical: "Deep learning model that adapts to individual coding styles.",
         studentUse: "Personalized code suggestions, learning best practices.",
-        icon: "fa-keyboard"
+        icon: "fa-keyboard",
+        url: "https://www.tabnine.com/"
     },
     {
         name: "Cursor AI",
@@ -307,7 +320,8 @@ const aiTools = [
         description: "AI-powered code editor with advanced autocomplete and editing.",
         technical: "Code-specific transformer with editor-native integration.",
         studentUse: "Writing efficient code, refactoring, learning patterns.",
-        icon: "fa-mouse-pointer"
+        icon: "fa-mouse-pointer",
+        url: "https://cursor.sh/"
     },
     {
         name: "Midjourney",
@@ -315,7 +329,8 @@ const aiTools = [
         description: "AI image generation from text descriptions.",
         technical: "Diffusion model trained on millions of image-text pairs.",
         studentUse: "Creating illustrations for projects, visual storytelling, design concepts.",
-        icon: "fa-palette"
+        icon: "fa-palette",
+        url: "https://www.midjourney.com/"
     },
     {
         name: "DALL·E",
@@ -323,7 +338,8 @@ const aiTools = [
         description: "AI system creating realistic images from text descriptions.",
         technical: "CLIP-guided diffusion model for precise image generation.",
         studentUse: "Visualizing concepts, creating project artwork, design exploration.",
-        icon: "fa-image"
+        icon: "fa-image",
+        url: "https://openai.com/dall-e-3"
     },
     {
         name: "Leonardo",
@@ -331,7 +347,8 @@ const aiTools = [
         description: "AI image generation with fine control over style and elements.",
         technical: "Customizable diffusion models with specialized training.",
         studentUse: "Creating consistent character designs, thematic artwork.",
-        icon: "fa-paint-brush"
+        icon: "fa-paint-brush",
+        url: "https://leonardo.ai/"
     },
     {
         name: "Canva AI",
@@ -339,7 +356,8 @@ const aiTools = [
         description: "AI design tools integrated within Canva platform.",
         technical: "Multiple AI models for design, layout, and content generation.",
         studentUse: "Creating presentations, social media graphics, design projects.",
-        icon: "fa-object-group"
+        icon: "fa-object-group",
+        url: "https://www.canva.com/ai-tools/"
     },
     {
         name: "Adobe Firefly",
@@ -347,7 +365,8 @@ const aiTools = [
         description: "Creative generative AI integrated into Adobe Creative Cloud.",
         technical: "Ethically trained diffusion models for professional creative work.",
         studentUse: "Photo editing, digital art, graphic design projects.",
-        icon: "fa-fire"
+        icon: "fa-fire",
+        url: "https://www.adobe.com/sensei/generative-ai/firefly.html"
     },
     {
         name: "Pictory",
@@ -355,7 +374,8 @@ const aiTools = [
         description: "AI video creation from scripts, articles, or existing videos.",
         technical: "NLP for script analysis and ML for video assembly.",
         studentUse: "Creating video presentations, summarizing content, video essays.",
-        icon: "fa-video"
+        icon: "fa-video",
+        url: "https://pictory.ai/"
     },
     {
         name: "Synthesia",
@@ -363,7 +383,8 @@ const aiTools = [
         description: "Create AI-generated videos with virtual presenters.",
         technical: "Deep learning for realistic avatar synthesis and lip sync.",
         studentUse: "Creating educational videos, presentations with virtual hosts.",
-        icon: "fa-user-tie"
+        icon: "fa-user-tie",
+        url: "https://www.synthesia.io/"
     },
     {
         name: "ElevenLabs",
@@ -371,7 +392,8 @@ const aiTools = [
         description: "AI voice generation and text-to-speech platform.",
         technical: "Deep learning models for realistic voice synthesis.",
         studentUse: "Adding narration to projects, creating audio content, language practice.",
-        icon: "fa-microphone"
+        icon: "fa-microphone",
+        url: "https://elevenlabs.io/"
     },
     {
         name: "Descript",
@@ -379,7 +401,8 @@ const aiTools = [
         description: "AI-powered video and podcast editing through text editing.",
         technical: "Speech recognition and synthesis for seamless editing.",
         studentUse: "Editing class presentations, creating podcast episodes.",
-        icon: "fa-edit"
+        icon: "fa-edit",
+        url: "https://www.descript.com/"
     },
     {
         name: "Tome AI",
@@ -387,7 +410,8 @@ const aiTools = [
         description: "AI presentation tool that generates structured narratives.",
         technical: "NLP for content structuring and design automation.",
         studentUse: "Creating presentations quickly, structuring project reports.",
-        icon: "fa-columns"
+        icon: "fa-columns",
+        url: "https://tome.app/"
     },
     {
         name: "Gamma AI",
@@ -395,7 +419,8 @@ const aiTools = [
         description: "AI for creating presentations, documents, and web pages.",
         technical: "Content-aware design algorithms for automatic formatting.",
         studentUse: "Designing project reports, creating study materials.",
-        icon: "fa-shapes"
+        icon: "fa-shapes",
+        url: "https://gamma.app/"
     },
     {
         name: "Otter AI",
@@ -403,7 +428,8 @@ const aiTools = [
         description: "AI meeting assistant that records audio and writes notes.",
         technical: "Speech recognition with speaker identification and summarization.",
         studentUse: "Recording lectures, meeting notes, interview transcription.",
-        icon: "fa-otter"
+        icon: "fa-otter",
+        url: "https://otter.ai/"
     },
     {
         name: "Perplexity",
@@ -411,7 +437,8 @@ const aiTools = [
         description: "AI search engine with conversational answers and citations.",
         technical: "Retrieval-augmented generation combining search and language models.",
         studentUse: "Research with sources, fact-checking, learning new topics.",
-        icon: "fa-search"
+        icon: "fa-search",
+        url: "https://www.perplexity.ai/"
     },
     {
         name: "Wolfram Alpha",
@@ -419,7 +446,8 @@ const aiTools = [
         description: "Computational knowledge engine for math and science.",
         technical: "Symbolic computation engine with curated knowledge base.",
         studentUse: "Solving math problems, scientific calculations, data analysis.",
-        icon: "fa-calculator"
+        icon: "fa-calculator",
+        url: "https://www.wolframalpha.com/"
     },
     {
         name: "Khanmigo",
@@ -427,7 +455,8 @@ const aiTools = [
         description: "AI tutor by Khan Academy for personalized learning.",
         technical: "Educational AI trained on curriculum with pedagogical strategies.",
         studentUse: "Personalized tutoring, homework help, concept explanation.",
-        icon: "fa-graduation-cap"
+        icon: "fa-graduation-cap",
+        url: "https://www.khanacademy.org/khan-labs"
     },
     {
         name: "Socratic",
@@ -435,7 +464,8 @@ const aiTools = [
         description: "AI learning app that explains concepts using visual aids.",
         technical: "Computer vision and NLP for problem understanding and explanation.",
         studentUse: "Homework help, step-by-step explanations, visual learning.",
-        icon: "fa-lightbulb"
+        icon: "fa-lightbulb",
+        url: "https://socratic.org/"
     },
     {
         name: "Brainly AI",
@@ -443,7 +473,8 @@ const aiTools = [
         description: "AI-powered Q&A platform for student homework help.",
         technical: "Community-driven knowledge base with AI moderation and answers.",
         studentUse: "Homework questions, peer learning, subject-specific help.",
-        icon: "fa-brain"
+        icon: "fa-brain",
+        url: "https://brainly.com/"
     },
     {
         name: "HuggingFace Spaces",
@@ -451,7 +482,8 @@ const aiTools = [
         description: "Platform to discover, test, and deploy AI models.",
         technical: "Repository of open-source AI models with demo interfaces.",
         studentUse: "Experimenting with AI models, learning ML, building projects.",
-        icon: "fa-h-square"
+        icon: "fa-h-square",
+        url: "https://huggingface.co/spaces"
     },
     {
         name: "AutoGPT",
@@ -459,7 +491,8 @@ const aiTools = [
         description: "Autonomous AI agent that can complete multi-step tasks.",
         technical: "GPT-based agent with memory, planning, and execution capabilities.",
         studentUse: "Complex project planning, research automation, task management.",
-        icon: "fa-cogs"
+        icon: "fa-cogs",
+        url: "https://github.com/Significant-Gravitas/Auto-GPT"
     }
 ];
 
@@ -469,17 +502,21 @@ const aiToolsGrid = document.getElementById('aiToolsGrid');
 const searchInput = document.getElementById('searchInput');
 const categoryButtons = document.querySelectorAll('.category-btn');
 const viewMoreBtn = document.getElementById('viewMoreBtn');
+const visibleCount = document.getElementById('visibleCount');
+const exploreBtn = document.getElementById('exploreBtn');
+const learningBtn = document.getElementById('learningBtn');
 
-// Render AI Tools
+// Render AI Tools with enhanced animations
 function renderAITools(tools = aiTools, limit = visibleToolsCount) {
     aiToolsGrid.innerHTML = '';
     
     const toolsToShow = tools.slice(0, limit);
     
-    toolsToShow.forEach(tool => {
+    toolsToShow.forEach((tool, index) => {
         const card = document.createElement('div');
-        card.className = 'ai-card';
+        card.className = 'ai-card hidden';
         card.setAttribute('data-category', tool.category);
+        card.style.animationDelay = `${index * 0.05}s`;
         
         card.innerHTML = `
             <div class="ai-card-content">
@@ -499,12 +536,12 @@ function renderAITools(tools = aiTools, limit = visibleToolsCount) {
                 </div>
                 <div class="ai-card-footer">
                     <div class="ai-uses">Students use it for: ${tool.studentUse}</div>
-                    <button class="ai-try-btn">Try Now</button>
+                    <button class="ai-try-btn" data-url="${tool.url}">Try Now</button>
                 </div>
             </div>
         `;
         
-        // Add hover tilt effect
+        // Add enhanced hover tilt effect
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -513,34 +550,41 @@ function renderAITools(tools = aiTools, limit = visibleToolsCount) {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
             
-            const rotateY = ((x - centerX) / centerX) * 3;
-            const rotateX = ((centerY - y) / centerY) * 3;
+            const rotateY = ((x - centerX) / centerX) * 5;
+            const rotateX = ((centerY - y) / centerY) * 5;
             
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
         });
         
         card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+        });
+        
+        // Add click animation
+        card.addEventListener('click', () => {
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 150);
         });
         
         aiToolsGrid.appendChild(card);
     });
     
-    // Add scroll animations
+    // Add scroll animations with intersection observer
     const cards = document.querySelectorAll('.ai-card');
-    cards.forEach(card => {
-        card.classList.add('hidden');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        observer.observe(card);
-    });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    cards.forEach(card => observer.observe(card));
+    
+    // Update counter
+    visibleCount.textContent = Math.min(limit, tools.length);
 }
 
 // Get category display name
@@ -581,57 +625,97 @@ function filterTools() {
     renderAITools(filteredTools, visibleToolsCount);
     
     // Update view more button visibility
-    viewMoreBtn.style.display = filteredTools.length > visibleToolsCount ? 'inline-flex' : 'none';
+    if (filteredTools.length > visibleToolsCount) {
+        viewMoreBtn.style.display = 'inline-flex';
+        viewMoreBtn.querySelector('.btn-text').textContent = `View ${filteredTools.length - visibleToolsCount} More Tools`;
+    } else {
+        viewMoreBtn.style.display = 'none';
+    }
 }
 
-// Initialize
+// Initialize with enhanced effects
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize neural network animation
     initAIAnimation();
     
-    // Render initial tools
-    renderAITools();
+    // Render initial tools with staggered animation
+    setTimeout(() => {
+        renderAITools();
+    }, 300);
     
     // Set up event listeners
-    searchInput.addEventListener('input', filterTools);
+    searchInput.addEventListener('input', () => {
+        visibleToolsCount = 12;
+        filterTools();
+    });
     
     categoryButtons.forEach(button => {
         button.addEventListener('click', () => {
+            // Add click animation
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = '';
+            }, 150);
+            
             categoryButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
+            visibleToolsCount = 12;
             filterTools();
         });
     });
     
+    // Enhanced View More button animation
     viewMoreBtn.addEventListener('click', () => {
+        // Add click animation
+        viewMoreBtn.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            viewMoreBtn.style.transform = '';
+        }, 150);
+        
         visibleToolsCount += 12;
         filterTools();
         
-        // Scroll to newly added tools
-        window.scrollBy({
-            top: 300,
+        // Scroll to newly added tools with smooth animation
+        const newCards = document.querySelectorAll('.ai-card.hidden');
+        if (newCards.length > 0) {
+            newCards[0].scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+        
+        // Add confetti effect
+        createConfetti();
+    });
+    
+    // Try Now button redirect
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('ai-try-btn')) {
+            const url = e.target.getAttribute('data-url');
+            window.open(url, '_blank');
+            
+            // Add click feedback
+            e.target.innerHTML = '<i class="fas fa-external-link-alt"></i> Opening...';
+            setTimeout(() => {
+                e.target.textContent = 'Try Now';
+            }, 1000);
+        }
+    });
+    
+    // Hero buttons
+    exploreBtn.addEventListener('click', () => {
+        document.querySelector('#ai-tools').scrollIntoView({
             behavior: 'smooth'
         });
-        
-        // Hide button if all tools are shown
-        const searchTerm = searchInput.value.toLowerCase();
-        const activeCategory = document.querySelector('.category-btn.active').dataset.category;
-        
-        let filteredTools = aiTools;
-        if (activeCategory !== 'all') {
-            filteredTools = filteredTools.filter(tool => tool.category === activeCategory);
-        }
-        
-        if (searchTerm) {
-            filteredTools = filteredTools.filter(tool => 
-                tool.name.toLowerCase().includes(searchTerm) ||
-                tool.description.toLowerCase().includes(searchTerm)
-            );
-        }
-        
-        if (visibleToolsCount >= filteredTools.length) {
-            viewMoreBtn.style.display = 'none';
-        }
+    });
+    
+    learningBtn.addEventListener('click', () => {
+        // Add learning button animation
+        learningBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading Resources...';
+        setTimeout(() => {
+            learningBtn.textContent = 'Start Learning';
+            alert('Learning resources will be available soon!');
+        }, 1500);
     });
     
     // Mobile menu toggle
@@ -640,13 +724,53 @@ document.addEventListener('DOMContentLoaded', () => {
     
     mobileMenuBtn.addEventListener('click', () => {
         navLinks.classList.toggle('active');
+        mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
     });
     
     // Close mobile menu when clicking a link
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
         });
+    });
+    
+    // Contact form submission
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = contactForm.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                submitBtn.style.background = 'linear-gradient(90deg, #00ff88, #00cc66)';
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = 'linear-gradient(90deg, var(--primary-color), var(--secondary-color))';
+                    contactForm.reset();
+                    alert('Thank you for your message! We\'ll get back to you soon.');
+                }, 2000);
+            }, 2000);
+        });
+    }
+    
+    // Live chat button
+    document.querySelector('.chat-btn')?.addEventListener('click', () => {
+        alert('Live chat will open in a new window. Feature coming soon!');
+    });
+    
+    // Community button
+    document.querySelector('.community-btn')?.addEventListener('click', () => {
+        window.open('https://internadda.com/community/join.html', '_blank');
     });
     
     // Add scroll animations to sections
@@ -665,3 +789,52 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionObserver.observe(section);
     });
 });
+
+// Confetti effect for View More button
+function createConfetti() {
+    const colors = ['#00d9ff', '#8a2be2', '#ff00ff', '#00ff88', '#ffff00'];
+    
+    for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.cssText = `
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            z-index: 1000;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            animation: confetti-fall ${Math.random() * 1 + 1}s ease-out forwards;
+        `;
+        
+        document.body.appendChild(confetti);
+        
+        // Clean up after animation
+        setTimeout(() => {
+            confetti.remove();
+        }, 2000);
+    }
+    
+    // Add animation keyframes
+    if (!document.querySelector('#confetti-styles')) {
+        const style = document.createElement('style');
+        style.id = 'confetti-styles';
+        style.textContent = `
+            @keyframes confetti-fall {
+                0% {
+                    transform: translate(-50%, -50%) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(${Math.random() * 200 - 100}px, 100vh) rotate(${Math.random() * 360}deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
